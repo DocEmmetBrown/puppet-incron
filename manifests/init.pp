@@ -20,7 +20,7 @@ class incron (
       $enable = false
     }
 
-    service {'incrond': 
+    service {'incron': 
       ensure  => $ensure,
       enable  => $enable,
       require => Package['incron']     
