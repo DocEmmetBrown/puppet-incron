@@ -1,6 +1,9 @@
 require 'puppet/provider/parsedfile'
 
-Puppet::Type.type(:incron).provide(:incrontab, :parent => Puppet::Provider::ParsedFile, :default_target => ENV["USER"] || "root", :filetype => :flat) do
+def_user = ENV["USER"] ? ENV["USER"] : 'root'
+
+Puppet::Type.type(:incron).provide(:incrontab, :parent => Puppet::Provider::ParsedFile, :default_target => "/var/spool/incron/#{def_user}" , :filetype => :flat) do
+
   commands :incrontab => "incrontab"
 
   text_line :comment, :match => %r{^\s*#}, :post_parse => proc { |record|
